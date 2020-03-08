@@ -1,21 +1,24 @@
-import React from "react";
-import "./App.css";
-import Titles from "./Components/Titles";
-import SelectButton from "./Components/SelectButton";
-import DisplayWeatherResults from "./Components/DisplayWeatherResults";
-import WeatherDecision from "./Components/WeatherDecision";
+import React from 'react';
+import './App.css';
+import Titles from './Components/Titles';
+import SelectButton from './Components/SelectButton';
+import DisplayWeatherResults from './Components/DisplayWeatherResults';
+import WeatherDecision from './Components/WeatherDecision';
 
 class App extends React.Component {
-  state = {
-    weatherData: [],
-    city: undefined,
-    temperature: undefined,
-    imageID: undefined,
-    lat: "",
-    lon: "",
-    loading: true,
-    isHidden: true
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      weatherData: [],
+      city: undefined,
+      temperature: undefined,
+      imageID: undefined,
+      lat: '',
+      lon: '',
+      loading: true,
+      isHidden: true,
+    };
+  }
 
   /*   getTheLocation = async e => {
   if (navigator.geolocation) {
@@ -32,9 +35,9 @@ class App extends React.Component {
     console.log(`longitude: ${ long } | latitude: ${ lati }`);
   }
 } */
-  getTheWeather = async e => {
+  async getTheWeather(e) {
     e.preventDefault();
-    //const url = `https://api.openweathermap.org/data/2.5/weather?lat=${this.state.lat}&lon=${this.state.lon}&units=imperial&appid=78c8954cfc788e1248bcd83dc32befc8`;
+    // const url = `https://api.openweathermap.org/data/2.5/weather?lat=${this.state.lat}&lon=${this.state.lon}&units=imperial&appid=78c8954cfc788e1248bcd83dc32befc8`;
     const url = `https://api.openweathermap.org/data/2.5/weather?id=5128638&units=imperial&appid=78c8954cfc788e1248bcd83dc32befc8`;
     const response = await fetch(url);
     const data = await response.json();
@@ -46,9 +49,9 @@ class App extends React.Component {
       imageID: data.weather[0].icon,
       description: data.weather[0].description,
       loading: false,
-      isHidden: false
+      isHidden: false,
     });
-  };
+  }
 
   render() {
     return (
@@ -61,7 +64,7 @@ class App extends React.Component {
         </div>
         <div className="dialogue-container">
           {!this.state
-            .isHidden /*Hide this component until data is fetched from API */ && (
+            .isHidden /* Hide this component until data is fetched from API */ && (
             <div>
               <WeatherDecision temperature={this.state.temperature} />
               <DisplayWeatherResults
