@@ -1,12 +1,6 @@
-import React from "react";
+import React from 'react';
 
-export default class Unhappy extends React.Component{
-
-    render(){
-        return(
-            <div className ="coat-check">
-                Temperature is out of range!..Hope you're safe
-            </div>
-        );
-    }
+export default function Unhappy() {
+  const message = `Temperature is out of range!..Hope you're safe`;
+  return <div className="coat-check">{message}</div>;
 }

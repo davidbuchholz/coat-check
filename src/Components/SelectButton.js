@@ -1,11 +1,17 @@
-import React from "react";
+import React from 'react';
 
-export default class SelectButton extends React.Component{
-    render(){
-        return(
-            <div>
-                <button className = "button" onClick = {this.props.getTheWeather}>Do I Need My Coat?</button>
-            </div>
-        );
-    }
+export default class SelectButton extends React.Component {
+  render() {
+    const { callAPI } = this.props;
+    return (
+      <div>
+        <input
+          type="button"
+          className="button"
+          onClick={callAPI}
+          value="Do I Need My Coat?"
+        />
+      </div>
+    );
+  }
 }

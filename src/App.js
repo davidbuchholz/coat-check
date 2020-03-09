@@ -9,69 +9,55 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      weatherData: [],
       city: undefined,
       temperature: undefined,
       imageID: undefined,
-      lat: '',
-      lon: '',
-      loading: true,
       isHidden: true,
     };
+    this.callAPI = this.callAPI.bind(this);
   }
 
-  /*   getTheLocation = async e => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(displayLocationInfo);
-  }
-
-  function displayLocationInfo(position) {
-    const long = position.coords.longitude;
-    const lati = position.coords.latitude;
-    this.setState = ({
-      lat: position.coords.latitude,
-      lon: position.coords.longitude
-    }).bind()
-    console.log(`longitude: ${ long } | latitude: ${ lati }`);
-  }
-} */
-  async getTheWeather(e) {
-    e.preventDefault();
-    // const url = `https://api.openweathermap.org/data/2.5/weather?lat=${this.state.lat}&lon=${this.state.lon}&units=imperial&appid=78c8954cfc788e1248bcd83dc32befc8`;
+  callAPI() {
     const url = `https://api.openweathermap.org/data/2.5/weather?id=5128638&units=imperial&appid=78c8954cfc788e1248bcd83dc32befc8`;
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    this.setState({
-      weatherData: data,
-      city: data.name,
-      temperature: data.main.temp,
-      imageID: data.weather[0].icon,
-      description: data.weather[0].description,
-      loading: false,
-      isHidden: false,
-    });
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          city: data.name,
+          temperature: data.main.temp,
+          imageID: data.weather[0].icon,
+          description: data.weather[0].description,
+          isHidden: false,
+        });
+      });
   }
 
   render() {
+    const {
+      isHidden,
+      temperature,
+      city,
+      description,
+      imageID,
+    } = this.state;
     return (
       <div className="container">
         <div className="titles-container">
           <Titles />
         </div>
         <div className="button-container">
-          <SelectButton getTheWeather={this.getTheWeather} />
+          <SelectButton callAPI={this.callAPI} />
         </div>
         <div className="dialogue-container">
-          {!this.state
-            .isHidden /* Hide this component until data is fetched from API */ && (
+          {!isHidden /* Hide this component until data is fetched from API */ && (
             <div>
-              <WeatherDecision temperature={this.state.temperature} />
+              <WeatherDecision temperature={temperature} />
               <DisplayWeatherResults
-                city={this.state.city}
-                temperature={this.state.temperature}
-                imageID={this.state.imageID}
-                description={this.state.description}
+                city={city}
+                temperature={temperature}
+                imageID={imageID}
+                description={description}
               />
             </div>
           )}
