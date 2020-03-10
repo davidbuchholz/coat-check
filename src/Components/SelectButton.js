@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class SelectButton extends React.Component {
   render() {
-    const { callAPI } = this.props;
+    const { callAPI, isDisabled } = this.props;
     return (
       <div>
         <input
@@ -10,6 +10,7 @@ export default class SelectButton extends React.Component {
           className="button"
           onClick={callAPI}
           value="Do I Need My Coat?"
+          disabled={isDisabled}
         />
       </div>
     );

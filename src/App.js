@@ -14,21 +14,24 @@ class App extends React.Component {
       location: undefined,
       imageID: undefined,
       isHidden: true,
+      isDisabled: true,
     };
     this.callAPI = this.callAPI.bind(this);
     this.findCoordinates = this.findCoordinates.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.findCoordinates();
   }
 
   findCoordinates() {
     if (navigator.geolocation) {
-      console.log(`Supported!`);
-      return navigator.geolocation.getCurrentPosition(
+      navigator.geolocation.getCurrentPosition(
         position => {
-          this.setState({ location: position.coords });
+          this.setState({
+            location: position.coords,
+            isDisabled: false,
+          });
         },
         error => console.error(error.message),
         {
@@ -37,6 +40,8 @@ class App extends React.Component {
           maximumAge: 1000,
         },
       );
+    } else {
+      console.log(`Geolocation is not supported by your device`);
     }
   }
 
@@ -53,6 +58,9 @@ class App extends React.Component {
           description: data.weather[0].description,
           isHidden: false,
         });
+      })
+      .catch(error => {
+        console.log(error);
       });
   }
 
@@ -63,6 +71,7 @@ class App extends React.Component {
       city,
       description,
       imageID,
+      isDisabled,
     } = this.state;
     return (
       <div className="container">
@@ -70,7 +79,10 @@ class App extends React.Component {
           <Titles />
         </div>
         <div className="button-container">
-          <SelectButton callAPI={this.callAPI} />
+          <SelectButton
+            callAPI={this.callAPI}
+            isDisabled={isDisabled}
+          />
         </div>
         <div className="dialogue-container">
           {!isHidden /* Hide this component until data is fetched from API */ && (
