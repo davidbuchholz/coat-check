@@ -4,11 +4,11 @@ Wondering if you'll need a coat as you walk out the door? This app will give you
 
 ## Getting Started
 
-To view a hosted version of this project, click this URL: https://johnbuchholz.github.io/coat-check/
+To view a hosted version of this project, click this URL: https://davidbuchholz.github.io/coat-check/
 
 ## Running the Tool
 
-* Access https://johnbuchholz.github.io/coat-check/
+* Access https://davidbuchholz.github.io/coat-check/
 * Select the various buttons
 
 ## Built With
@@ -22,7 +22,3 @@ To view a hosted version of this project, click this URL: https://johnbuchholz.g
 ## Authors
 
 * **David Buchholz**
-
-## Acknowledgments
-
-* [Edd Yerburgh](https://eddyerburgh.me/toggle-visibility-with-react)
