@@ -17,8 +17,11 @@ class App extends React.Component {
     this.callAPI = this.callAPI.bind(this);
   }
 
+  /**
+   * Replace the REACT_APP_API_KEY with your own OpenWeather API key
+   */
   callAPI() {
-    const url = `https://api.openweathermap.org/data/2.5/weather?id=5128638&units=imperial&appid=78c8954cfc788e1248bcd83dc32befc8`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?id=5128638&units=imperial&appid=${process.env.REACT_APP_API_KEY}`;
     fetch(url)
       .then(response => response.json())
       .then(data => {
