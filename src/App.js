@@ -11,21 +11,41 @@ class App extends React.Component {
     this.state = {
       city: undefined,
       temperature: undefined,
+      location: undefined,
       imageID: undefined,
       isHidden: true,
     };
     this.callAPI = this.callAPI.bind(this);
+    this.findCoordinates = this.findCoordinates.bind(this);
   }
 
-  /**
-   * Replace the REACT_APP_API_KEY with your own OpenWeather API key
-   */
+  componentDidMount(){
+    this.findCoordinates();
+  }
+
+  findCoordinates() {
+    if (navigator.geolocation) {
+      console.log(`Supported!`);
+      return navigator.geolocation.getCurrentPosition(
+        position => {
+          this.setState({ location: position.coords });
+        },
+        error => console.error(error.message),
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 1000,
+        },
+      );
+    }
+  }
+
   callAPI() {
-    const url = `https://api.openweathermap.org/data/2.5/weather?id=5128638&units=imperial&appid=${process.env.REACT_APP_API_KEY}`;
+    const { location } = this.state;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&units=imperial&appid=${process.env.REACT_APP_API_KEY}`;
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         this.setState({
           city: data.name,
           temperature: data.main.temp,
